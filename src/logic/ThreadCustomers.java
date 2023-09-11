@@ -19,7 +19,7 @@ public class ThreadCustomers implements Runnable {
             goToTheBar();
             cpuBound(bar, timeAtTheBar);
             goHome();
-            cpuBound(!bar, timeAtHome);
+            cpuBound(bar, timeAtHome);
         }
     }
 
@@ -27,6 +27,7 @@ public class ThreadCustomers implements Runnable {
         try {
             Bar.emptyChairs.acquire();
             Bar.mutex.acquire();
+            bar = true;
             System.out.println(id + " entrou no bar!");
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -39,6 +40,7 @@ public class ThreadCustomers implements Runnable {
         try {
             Bar.fullChairs.acquire();
             Bar.mutex.acquire();
+            bar = false;
             System.out.println(id + " saiu do bar!");
         } catch (InterruptedException e) {
             e.printStackTrace();
