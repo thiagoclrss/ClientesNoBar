@@ -15,22 +15,39 @@ public class ThreadCustomers implements Runnable {
 
     @Override
     public void run() {
-
+        while (true){
+            goToTheBar();
+            cpuBound(bar, timeAtTheBar);
+            goHome();
+            cpuBound(!bar, timeAtHome);
+        }
     }
 
     public void goToTheBar() {
         try {
-            Bar.chairs.acquire();
-            cpuBound(bar, timeAtTheBar);
-            System.out.printf(id + "está jantando!");
+            Bar.emptyChairs.acquire();
+            Bar.mutex.acquire();
+            System.out.println(id + " entrou no bar!");
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
-            Bar.chairs.release();
+            Bar.mutex.release();
+            Bar.fullChairs.release();
         }
     }
     public void goHome() {
-        cpuBound(!bar, timeAtHome);
+        try {
+            Bar.fullChairs.acquire();
+            Bar.mutex.acquire();
+            System.out.println(id + " saiu do bar!");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            Bar.mutex.release();
+            Bar.emptyChairs.release();
+        }
+
+
     }
 
     public void cpuBound(Boolean bar, long time){
@@ -38,9 +55,9 @@ public class ThreadCustomers implements Runnable {
         long auxQuietTime = timeAtHome;
 
         if (this.bar) {
-            System.out.println("Criança " + this.id + " está no bar. ");
+            System.out.println("Cliente " + this.id + " está no bar. ");
         } else {
-            System.out.println("Criança " + this.id + " está em casa. ");
+            System.out.println("Cliente " + this.id + " está em casa. ");
         }
 
         long tempoAtual = System.currentTimeMillis();
@@ -48,17 +65,17 @@ public class ThreadCustomers implements Runnable {
         while (tempoDecorrido < time) {
             milisegundos = (System.currentTimeMillis() - tempoAtual);
             if ((milisegundos / 1000) > tempoDecorrido) {
-                if (ball) auxPlayingTime--;
+                if (bar) auxPlayingTime--;
                 else auxQuietTime--;
             }
-            if (ball && auxPlayingTime == 0) {
+            if (bar && auxPlayingTime == 0) {
                 break;
             }
-            if (ball && auxQuietTime == 0) {
+            if (bar && auxQuietTime == 0) {
                 break;
             }
             tempoDecorrido = milisegundos / 1000;
         }
     }
-    }
+
 }

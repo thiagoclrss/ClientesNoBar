@@ -1,3 +1,4 @@
+import logic.Bar;
 import logic.ThreadCustomers;
 
 import java.util.concurrent.Semaphore;
@@ -8,6 +9,11 @@ public class Main {
 
     public static void main(String[] args) {
         //Thread customers = new Thread(new ThreadCustomers(1,2,3));
+        Bar bar = new Bar(1);
+        Thread  t1 = new Thread(new ThreadCustomers(1, 7, 7));
+        Thread  t2 = new Thread(new ThreadCustomers(2, 7, 7));
+        t1.start();
+        t2.start();
 
     }
 }
