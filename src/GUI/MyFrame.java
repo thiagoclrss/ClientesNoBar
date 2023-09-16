@@ -1,12 +1,15 @@
 package GUI;
 
+import logic.Bar;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class MyFrame extends JFrame {
 
     public MyFrame() {
-        setSize(500,500);
+        setSize(1280,720);
+        setScreen();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
@@ -23,7 +26,9 @@ public class MyFrame extends JFrame {
     }
 
     public static void main(String[] args) {
+        Bar bar = new Bar(1);
         new MyFrame();
+
     }
 
 }
