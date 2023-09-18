@@ -12,6 +12,7 @@ public class WindowButton extends JPanel implements ActionListener {
 
     public WindowButton(){
         setBackground(Color.BLACK);
+        setBorder(BorderFactory.createLineBorder(Color.RED, 2));
         setLayout(new FlowLayout());
         addButton();
 
