@@ -9,17 +9,32 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class WindowButton extends JPanel implements ActionListener {
-
+    JTextField fiedlID;
+    JTextField fieldTimeAtTheBar;
+    JTextField fieldTimeAtHome;
+    Integer barTime;
+    Integer homeTime;
+    AddCustomerButton button;
     public WindowButton(){
-        setBackground(Color.BLACK);
-        setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        setLayout(new FlowLayout());
+        setBackground(new Color(0xB0AEAC));
+        setBorder(BorderFactory.createLineBorder(new Color(0xB1942D), 3));
+        //setLayout(new FlowLayout());
         addButton();
 
     }
 
     private void addButton(){
-        AddCustomerButton button = new AddCustomerButton();
+        //id
+        fiedlID = new CustomTextField("NOME: ");
+        add(fiedlID);
+        //tempo no bar
+        fieldTimeAtTheBar = new CustomTextField("TEMPO NO BAR:");
+        add(fieldTimeAtTheBar);
+        //tempo em casa
+        fieldTimeAtHome = new CustomTextField("TEMPO EM CASA:");
+        add(fieldTimeAtHome);
+        //
+        button = new AddCustomerButton();
         button.addActionListener(this);
         add(button);
     }
@@ -27,9 +42,17 @@ public class WindowButton extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("teste");
+        if(e.getSource() == button){
+            String id = fiedlID.getText();
+            try {
+                barTime = Integer.parseInt(fieldTimeAtTheBar.getText());
+                homeTime = Integer.parseInt(fieldTimeAtHome.getText());
+            } catch (NumberFormatException ex){
+                ex.printStackTrace();
+            }
 
-        Thread  t1 = new Thread(new ThreadCustomers(1, 10, 10));
-        t1.start();
+            Thread  customer = new Thread(new ThreadCustomers(id, barTime, homeTime));
+            customer.start();
+        }
     }
 }

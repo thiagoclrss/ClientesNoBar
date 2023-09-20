@@ -2,12 +2,12 @@ package logic;
 
 public class ThreadCustomers implements Runnable {
 
-    private int id;
-    private int timeAtTheBar;
-    private int timeAtHome;
+    private String id;
+    private Integer timeAtTheBar;
+    private Integer timeAtHome;
     private Boolean bar = true;
 
-    public ThreadCustomers(int id, int timeAtTheBar, int timeAtHome) {
+    public ThreadCustomers(String id, Integer timeAtTheBar, Integer timeAtHome) {
         this.id = id;
         this.timeAtTheBar = timeAtTheBar;
         this.timeAtHome = timeAtHome;

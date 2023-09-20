@@ -7,12 +7,12 @@ import java.awt.*;
 public class AddCustomerButton extends JButton {
     public AddCustomerButton() {
         setText("Adicionar novo cliente");
-        //setBounds(20,20, 60,60);
-        setFont(new Font("courier", Font.PLAIN, 15));
+        setPreferredSize(new Dimension(230, 30));
+        setFont(new Font("courier", Font.BOLD, 15));
         setOpaque(true);
-        setBackground(Color.blue);
-        setForeground(Color.WHITE);
-        setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        setBackground(new Color(0xD9D9D9));
+        setForeground(new Color(0x1D2782));
+        setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
     }
 }
