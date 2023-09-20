@@ -7,7 +7,7 @@ import java.awt.*;
 public class AddCustomerButton extends JButton {
     public AddCustomerButton() {
         setText("Adicionar novo cliente");
-        setPreferredSize(new Dimension(230, 30));
+        setPreferredSize(new Dimension(200, 40));
         setFont(new Font("courier", Font.BOLD, 15));
         setOpaque(true);
         setBackground(new Color(0xD9D9D9));

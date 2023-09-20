@@ -19,21 +19,21 @@ public class MyFrame extends JFrame {
     private void setScreen(){
         setLayout(null);
         WindowButton windowButton = new WindowButton();
-        windowButton.setBounds(990, 15,260,240);
+        windowButton.setBounds(990, 25,260,240);
         //windowButton.setPreferredSize(new Dimension(260, 240));
         add(windowButton);
 
         Display animation = new Display();
-        animation.setBounds(288, 15,690,370);
+        animation.setBounds(288, 25,690,370);
         //animation.setPreferredSize(new Dimension(320, 400));
         add(animation);
 
         CustomerStatus cardCustomer = new CustomerStatus();
-        cardCustomer.setBounds(15,15, 260, 620);
+        cardCustomer.setBounds(15,25, 260, 620);
         add(cardCustomer);
 
         Log log = new Log();
-        log.setBounds(288, 405,690,230);
+        log.setBounds(288, 415,690,230);
         //log.setPreferredSize(new Dimension(320,200));
         add(log);
     }
