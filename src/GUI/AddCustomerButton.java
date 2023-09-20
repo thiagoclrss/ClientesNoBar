@@ -12,7 +12,7 @@ public class AddCustomerButton extends JButton {
         setOpaque(true);
         setBackground(new Color(0xD9D9D9));
         setForeground(new Color(0x1D2782));
-        setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        setBorder(BorderFactory.createLineBorder(Color.GRAY, 3));
 
     }
 }

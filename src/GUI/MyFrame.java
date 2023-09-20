@@ -17,14 +17,25 @@ public class MyFrame extends JFrame {
     }
 
     private void setScreen(){
-        setLayout(new BorderLayout());
+        setLayout(null);
         WindowButton windowButton = new WindowButton();
-        windowButton.setPreferredSize(new Dimension(260, 240));
-        add(windowButton, BorderLayout.EAST);
+        windowButton.setBounds(990, 15,260,240);
+        //windowButton.setPreferredSize(new Dimension(260, 240));
+        add(windowButton);
+
         Display animation = new Display();
-        add(animation, BorderLayout.CENTER);
+        animation.setBounds(288, 15,690,370);
+        //animation.setPreferredSize(new Dimension(320, 400));
+        add(animation);
+
+        CustomerStatus cardCustomer = new CustomerStatus();
+        cardCustomer.setBounds(15,15, 260, 620);
+        add(cardCustomer);
+
         Log log = new Log();
-        //add(animation, BorderLayout.SOUTH);
+        log.setBounds(288, 405,690,230);
+        //log.setPreferredSize(new Dimension(320,200));
+        add(log);
     }
 
     public static void main(String[] args) {
