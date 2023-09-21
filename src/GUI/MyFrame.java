@@ -6,10 +6,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MyFrame extends JFrame {
-
+    final int FRAME_WIDTH = 1280;
+    final int FRAME_HEIGHT = 720;
     public MyFrame() {
-        setSize(1280,720);
+        setSize(FRAME_WIDTH,FRAME_HEIGHT);
         getContentPane().setBackground(new Color(0x787676));
+        //this.pack();
         setScreen();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -25,7 +27,7 @@ public class MyFrame extends JFrame {
 
         Display animation = new Display();
         animation.setBounds(288, 25,690,370);
-        //animation.setPreferredSize(new Dimension(320, 400));
+        //animation.setPreferredSize(new Dimension(690, 370));
         add(animation);
 
         CustomerStatus cardCustomer = new CustomerStatus();
