@@ -36,7 +36,7 @@ public class MyFrame extends JFrame {
         Log log = new Log();
         log.setBounds(288, 405,690,230);
         //log.setPreferredSize(new Dimension(320,200));
-        JTextAreaOutputStream outputStream = new JTextAreaOutputStream(log.getLogTextArea());
+        OutputStream outputStream = new OutputStream(log.getLogTextArea());
         System.setOut(new PrintStream(outputStream));
         add(log);
     }

@@ -57,9 +57,9 @@ public class ThreadCustomers implements Runnable {
         long auxQuietTime = timeAtHome;
 
         if (this.bar) {
-            System.out.println("Cliente " + this.id + " está no bar. ");
+            System.out.println("Cliente " + this.id + " esta no bar. ");
         } else {
-            System.out.println("Cliente " + this.id + " está em casa. ");
+            System.out.println("Cliente " + this.id + " esta em casa. ");
         }
 
         long tempoAtual = System.currentTimeMillis();

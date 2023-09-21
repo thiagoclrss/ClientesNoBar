@@ -1,13 +1,12 @@
 package GUI;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import javax.swing.JTextArea;
 
-public class JTextAreaOutputStream extends OutputStream {
+public class OutputStream extends java.io.OutputStream {
     private JTextArea textArea;
 
-    public JTextAreaOutputStream(JTextArea textArea) {
+    public OutputStream(JTextArea textArea) {
         this.textArea = textArea;
     }
 
