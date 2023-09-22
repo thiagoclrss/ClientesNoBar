@@ -15,6 +15,7 @@ public class MyFrame extends JFrame {
         setScreen();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setResizable(false);
         setVisible(true);
     }
 
@@ -22,12 +23,10 @@ public class MyFrame extends JFrame {
         setLayout(null);
         WindowButton windowButton = new WindowButton();
         windowButton.setBounds(990, 25,260,240);
-        //windowButton.setPreferredSize(new Dimension(260, 240));
         add(windowButton);
 
         Display animation = new Display();
         animation.setBounds(288, 25,690,370);
-        //animation.setPreferredSize(new Dimension(690, 370));
         add(animation);
 
         CustomerStatus cardCustomer = new CustomerStatus();
@@ -36,7 +35,6 @@ public class MyFrame extends JFrame {
 
         Log log = new Log();
         log.setBounds(288, 415,690,230);
-        //log.setPreferredSize(new Dimension(320,200));
         add(log);
     }
 
