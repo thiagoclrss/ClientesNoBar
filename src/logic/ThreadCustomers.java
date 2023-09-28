@@ -80,4 +80,7 @@ public class ThreadCustomers implements Runnable {
         }
     }
 
+    public String getId() {
+        return id;
+    }
 }
