@@ -36,7 +36,7 @@ public class Display extends JPanel implements ActionListener {
         implementGUIInterface();
 
         this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
-        //this.setLayout(new FlowLayout());
+
         this.setBackground(Color.BLACK);
         background = new ImageIcon("assets/cityBackground2.jpg").getImage();
         background = background.getScaledInstance(690,370, Image.SCALE_SMOOTH);
@@ -54,7 +54,21 @@ public class Display extends JPanel implements ActionListener {
         timer.start();
     }
 
-    private void implementGUIInterface() {
+    public void paint(Graphics g){
+        super.paint(g);
+        Graphics2D g2D = (Graphics2D) g;
+
+        g2D.drawImage(background,0,0, null);
+        for(int i = 0; i < customerX.size(); i++){
+            g2D.drawImage(customer, customerX.get(i),260,null);
+        }
+        //g2D.drawImage(customer, 40,260,this);
+        g2D.drawImage(bar, 495,385 - bar.getHeight(null), null);
+        g2D.drawImage(home, 20, 390 - home.getHeight(null) , null);
+        //g2D.drawImage(customer, 40,260,null);
+    }
+
+     void implementGUIInterface() {
         guiInterface = new GUIInterface() {
             @Override
             public void newCustomerAnimation() {
@@ -69,6 +83,7 @@ public class Display extends JPanel implements ActionListener {
             public void goToTheBar(String id) {
                 var index = getThreadByIndex(id);
                 try{
+                    System.out.println("teste");
                     animationMutexList.get(index).acquire();
                 } catch (InterruptedException e){
                     throw new RuntimeException(e);
@@ -103,16 +118,7 @@ public class Display extends JPanel implements ActionListener {
         actionsList.set(index, action);
     }
 
-    public void paint(Graphics g){
-        super.paint(g);
-        Graphics2D g2D = (Graphics2D) g;
 
-        g2D.drawImage(background,0,0, this);
-        g2D.drawImage(customer, 40,260,null);
-        g2D.drawImage(bar, 495,385 - bar.getHeight(null), null);
-        g2D.drawImage(home, 20, 390 - home.getHeight(null) , null);
-
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -135,11 +141,11 @@ public class Display extends JPanel implements ActionListener {
     }
 
     private void goToBarXY(int index) {
-        goToXY(1,1, index);
+        goToXY(490,1, index);
     }
 
     private void goHomeXY(int index) {
-        goToXY(1,1,index);
+        goToXY(30,1,index);
     }
 
     private void goToXY(int x, int y, int index) {
@@ -152,14 +158,15 @@ public class Display extends JPanel implements ActionListener {
             customerX.set(index, currentX + velocity);
         }
 
+        /*
         int currentY = customerY.get(index);
         if(currentY < y) {
             customerY.set(index, currentY + velocity);
         } else if(currentY > y) {
             customerY.set(index, currentY - velocity);
         }
-
-        if(currentY == y && currentX == x) {
+        */
+        if(currentX == x) {
             actionsList.set(index, null);
             animationMutexList.get(index).release();
         }
@@ -168,4 +175,8 @@ public class Display extends JPanel implements ActionListener {
 
     }
 
+    public GUIInterface getGuiInterface() {
+        return guiInterface;
+
+    }
 }

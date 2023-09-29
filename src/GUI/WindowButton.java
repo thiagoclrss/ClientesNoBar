@@ -1,6 +1,8 @@
 package GUI;
 
 import logic.Bar;
+import logic.CustomerFactory;
+import logic.GUIInterface;
 import logic.ThreadCustomers;
 
 import javax.swing.*;
@@ -14,11 +16,16 @@ public class WindowButton extends JPanel implements ActionListener {
     JTextField fieldTimeAtHome;
     Integer barTime;
     Integer homeTime;
+    GUIInterface guiInterface;
     AddCustomerButton button;
-    public WindowButton(){
+    public WindowButton(GUIInterface guiInterface){
         setBackground(new Color(0xB0AEAC));
+        //guiInterface =
         //setBorder(BorderFactory.createLineBorder(new Color(0xB1942D), 3));
         //setLayout(new FlowLayout());
+
+        this.guiInterface = guiInterface;
+
         addButton();
 
     }
@@ -51,8 +58,15 @@ public class WindowButton extends JPanel implements ActionListener {
                 ex.printStackTrace();
             }
 
-            Thread  customer = new Thread(new ThreadCustomers(id, barTime, homeTime));
-            customer.start();
+            CustomerFactory addCustomer = new CustomerFactory();
+            addCustomer.addCustomer(
+                    id,
+                    barTime,
+                    homeTime,
+                    guiInterface
+                    );
+            //Thread  customer = new Thread(new ThreadCustomers(id, barTime, homeTime, GUI.MyFrame.getAnimation()));
+            //customer.start();
         }
     }
 }

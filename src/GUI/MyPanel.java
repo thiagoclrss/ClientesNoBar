@@ -21,10 +21,10 @@ public class MyPanel extends JPanel {
 
     private void setScreen(){
         //setLayout(null);
-        WindowButton windowButton = new WindowButton();
-        windowButton.setPreferredSize(new Dimension(260,240));
+        //WindowButton windowButton = new WindowButton();
+        //windowButton.setPreferredSize(new Dimension(260,240));
         //windowButton.setBounds(990, 25,260,240);
-        this.add(windowButton,BorderLayout.EAST);
+        //this.add(windowButton,BorderLayout.EAST);
 
         Display animation = new Display();
         animation.setPreferredSize(new Dimension(690,370));

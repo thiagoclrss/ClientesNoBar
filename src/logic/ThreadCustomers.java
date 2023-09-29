@@ -6,15 +6,18 @@ public class ThreadCustomers implements Runnable {
     private Integer timeAtTheBar;
     private Integer timeAtHome;
     private Boolean bar = true;
+    private GUIInterface guiInterface;
 
-    public ThreadCustomers(String id, Integer timeAtTheBar, Integer timeAtHome) {
+    public ThreadCustomers(String id, Integer timeAtTheBar, Integer timeAtHome, GUIInterface guiInterface) {
         this.id = id;
         this.timeAtTheBar = timeAtTheBar;
         this.timeAtHome = timeAtHome;
+        this.guiInterface = guiInterface;
     }
 
     @Override
     public void run() {
+        guiInterface.newCustomerAnimation();
         while (true){
             goToTheBar();
             cpuBound(bar, timeAtTheBar);
@@ -26,6 +29,7 @@ public class ThreadCustomers implements Runnable {
     public void goToTheBar() {
         try {
             Bar.emptyChairs.acquire();
+            guiInterface.goToTheBar(id);
             Bar.mutex.acquire();
             bar = true;
             System.out.println(id + " entrou no bar!");
@@ -39,6 +43,7 @@ public class ThreadCustomers implements Runnable {
     public void goHome() {
         try {
             Bar.fullChairs.acquire();
+            guiInterface.goHome(id);
             Bar.mutex.acquire();
             bar = false;
             System.out.println(id + " saiu do bar!");

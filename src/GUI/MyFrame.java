@@ -1,6 +1,7 @@
 package GUI;
 
 import logic.Bar;
+import logic.GUIInterface;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,6 +9,8 @@ import java.awt.*;
 public class MyFrame extends JFrame {
     final int FRAME_WIDTH = 1280;
     final int FRAME_HEIGHT = 720;
+    public GUIInterface teste;
+    Display animation;
     public MyFrame() {
         setSize(FRAME_WIDTH,FRAME_HEIGHT);
         getContentPane().setBackground(new Color(0x787676));
@@ -21,13 +24,15 @@ public class MyFrame extends JFrame {
 
     private void setScreen(){
         setLayout(null);
-        WindowButton windowButton = new WindowButton();
+
+        this.animation = new Display();
+        animation.setBounds(288, 25,690,370);
+        this.teste = animation.getGuiInterface();
+        add(animation);
+
+        WindowButton windowButton = new WindowButton(teste);
         windowButton.setBounds(990, 25,260,240);
         add(windowButton);
-
-        Display animation = new Display();
-        animation.setBounds(288, 25,690,370);
-        add(animation);
 
         CustomerStatus cardCustomer = new CustomerStatus();
         cardCustomer.setBounds(15,25, 260, 620);
@@ -36,6 +41,10 @@ public class MyFrame extends JFrame {
         Log log = new Log();
         log.setBounds(288, 415,690,230);
         add(log);
+    }
+
+    public Display getAnimation() {
+        return animation;
     }
 
     public static void main(String[] args) {

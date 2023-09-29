@@ -15,8 +15,8 @@ public class CustomerFactory {
         customers = new ArrayList<>();
     }
 
-    public void addCustomer(String id, Integer barTime, Integer homeTime){
-        Thread  customer = new Thread(new ThreadCustomers(id, barTime, homeTime));
+    public void addCustomer(String id, Integer barTime, Integer homeTime, GUIInterface guiInterface){
+        Thread  customer = new Thread(new ThreadCustomers(id, barTime, homeTime, guiInterface));
         customers.add(customer);
         customer.start();
 

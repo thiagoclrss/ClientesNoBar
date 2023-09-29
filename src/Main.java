@@ -1,3 +1,4 @@
+import GUI.MyFrame;
 import logic.Bar;
 import logic.ThreadCustomers;
 
@@ -14,6 +15,7 @@ public class Main {
         //Thread  t2 = new Thread(new ThreadCustomers(2, 10, 10));
         //t1.start();
         //t2.start();
+
 
     }
 }
