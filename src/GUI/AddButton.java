@@ -4,9 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 
 
-public class AddCustomerButton extends JButton {
-    public AddCustomerButton() {
-        setText("Adicionar novo cliente");
+public class AddButton extends JButton {
+    public AddButton(String text) {
+        setText(text);
         setPreferredSize(new Dimension(200, 40));
         setFont(new Font("courier", Font.BOLD, 15));
         setOpaque(true);

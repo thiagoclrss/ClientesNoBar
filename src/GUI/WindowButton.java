@@ -16,18 +16,13 @@ public class WindowButton extends JPanel implements ActionListener {
     JTextField fieldTimeAtHome;
     Integer barTime;
     Integer homeTime;
+    String id;
     GUIInterface guiInterface;
-    AddCustomerButton button;
+    AddButton button;
     public WindowButton(GUIInterface guiInterface){
         setBackground(new Color(0xB0AEAC));
-        //guiInterface =
-        //setBorder(BorderFactory.createLineBorder(new Color(0xB1942D), 3));
-        //setLayout(new FlowLayout());
-
         this.guiInterface = guiInterface;
-
         addButton();
-
     }
 
     private void addButton(){
@@ -41,7 +36,7 @@ public class WindowButton extends JPanel implements ActionListener {
         fieldTimeAtHome = new CustomTextField("TEMPO EM CASA:");
         add(fieldTimeAtHome);
         //
-        button = new AddCustomerButton();
+        button = new AddButton("Adicionar novo cliente");
         button.addActionListener(this);
         add(button);
     }
@@ -50,7 +45,7 @@ public class WindowButton extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == button){
-            String id = fiedlID.getText();
+            id = fiedlID.getText();
             try {
                 barTime = Integer.parseInt(fieldTimeAtTheBar.getText());
                 homeTime = Integer.parseInt(fieldTimeAtHome.getText());
@@ -58,15 +53,14 @@ public class WindowButton extends JPanel implements ActionListener {
                 ex.printStackTrace();
             }
 
-            CustomerFactory addCustomer = new CustomerFactory();
-            addCustomer.addCustomer(
+            CustomerFactory customerCustomer = new CustomerFactory();
+            customerCustomer.addCustomer(
                     id,
                     barTime,
                     homeTime,
                     guiInterface
                     );
-            //Thread  customer = new Thread(new ThreadCustomers(id, barTime, homeTime, GUI.MyFrame.getAnimation()));
-            //customer.start();
+
         }
     }
 }

@@ -9,7 +9,7 @@ import java.awt.*;
 public class MyFrame extends JFrame {
     final int FRAME_WIDTH = 1280;
     final int FRAME_HEIGHT = 720;
-    public GUIInterface teste;
+    public GUIInterface guiInterface;
     Display animation;
     public MyFrame() {
         setSize(FRAME_WIDTH,FRAME_HEIGHT);
@@ -27,12 +27,16 @@ public class MyFrame extends JFrame {
 
         this.animation = new Display();
         animation.setBounds(288, 25,690,370);
-        this.teste = animation.getGuiInterface();
+        this.guiInterface = animation.getGuiInterface();
         add(animation);
 
-        WindowButton windowButton = new WindowButton(teste);
-        windowButton.setBounds(990, 25,260,240);
-        add(windowButton);
+        WindowButton windowCustomerButton = new WindowButton(guiInterface);
+        windowCustomerButton.setBounds(990, 300,260,240);
+        add(windowCustomerButton);
+
+        WindowBarButton windowBarButton = new WindowBarButton();
+        windowBarButton.setBounds(990, 25,260,240);
+        add(windowBarButton);
 
         CustomerStatus cardCustomer = new CustomerStatus();
         cardCustomer.setBounds(15,25, 260, 620);
@@ -48,7 +52,6 @@ public class MyFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-        Bar bar = new Bar(1);
         new MyFrame();
 
 

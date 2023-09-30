@@ -1,6 +1,6 @@
 package logic;
 
-public class ThreadCustomers implements Runnable {
+public class ThreadCustomers extends Thread {
 
     private String id;
     private Integer timeAtTheBar;
@@ -85,7 +85,7 @@ public class ThreadCustomers implements Runnable {
         }
     }
 
-    public String getId() {
+    public String getThreadId() {
         return id;
     }
 }

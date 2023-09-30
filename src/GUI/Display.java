@@ -83,7 +83,6 @@ public class Display extends JPanel implements ActionListener {
             public void goToTheBar(String id) {
                 var index = getThreadByIndex(id);
                 try{
-                    System.out.println("teste");
                     animationMutexList.get(index).acquire();
                 } catch (InterruptedException e){
                     throw new RuntimeException(e);
@@ -106,8 +105,12 @@ public class Display extends JPanel implements ActionListener {
 
     private int getThreadByIndex(String id) {
         var customer = CustomerFactory.customers;
+
         for(int index = 0; index < customer.size(); index++){
-            if(Objects.equals(customer.get(index).getId(), id)){
+            if(index == 1){
+                System.out.println(customer.get(1).getThreadId());
+            }
+            if(customer.get(index).getThreadId().equals(id)){
                 return index;
             }
         }
@@ -141,11 +144,11 @@ public class Display extends JPanel implements ActionListener {
     }
 
     private void goToBarXY(int index) {
-        goToXY(490,1, index);
+        goToXY(490,260, index);
     }
 
     private void goHomeXY(int index) {
-        goToXY(30,1,index);
+        goToXY(30,260,index);
     }
 
     private void goToXY(int x, int y, int index) {
@@ -155,24 +158,22 @@ public class Display extends JPanel implements ActionListener {
         if(currentX < x){
             customerX.set(index, currentX + velocity);
         } else if(currentX > x){
-            customerX.set(index, currentX + velocity);
+            customerX.set(index, currentX - velocity);
         }
 
-        /*
+
         int currentY = customerY.get(index);
         if(currentY < y) {
             customerY.set(index, currentY + velocity);
         } else if(currentY > y) {
             customerY.set(index, currentY - velocity);
         }
-        */
-        if(currentX == x) {
+
+        if(currentY == y && currentX == x) {
             actionsList.set(index, null);
             animationMutexList.get(index).release();
         }
-
         repaint();
-
     }
 
     public GUIInterface getGuiInterface() {
