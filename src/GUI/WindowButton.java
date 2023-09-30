@@ -53,14 +53,12 @@ public class WindowButton extends JPanel implements ActionListener {
                 ex.printStackTrace();
             }
 
-            CustomerFactory customerCustomer = new CustomerFactory();
-            customerCustomer.addCustomer(
+            CustomerFactory.addCustomer(
                     id,
                     barTime,
                     homeTime,
                     guiInterface
                     );
-
         }
     }
 }
