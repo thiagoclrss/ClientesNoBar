@@ -21,18 +21,21 @@ public class Display extends JPanel implements ActionListener {
 
     ArrayList<Integer> customerX;
     ArrayList<Integer> customerY;
-    ArrayList<Semaphore> animationMutexList;
+    ArrayList<Semaphore> customerAnimationMutexList;
+    ArrayList<Semaphore> labelAnimationMutexList;
     ArrayList<GUI.Action> actionsList;
     public GUIInterface guiInterface;
-    int velocity = 2;
+    int velocity = 1;
+    JLabel label;
     Timer timer;
     public Display(){
 
         customerX = new ArrayList<>();
         customerY = new ArrayList<>();
-        animationMutexList = new ArrayList<>();
+        customerAnimationMutexList = new ArrayList<>();
+        labelAnimationMutexList = new ArrayList<>();
         actionsList = new ArrayList<GUI.Action>();
-
+        label = new JLabel();
         implementGUIInterface();
 
         this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
@@ -60,12 +63,17 @@ public class Display extends JPanel implements ActionListener {
 
         g2D.drawImage(background,0,0, null);
         for(int i = 0; i < customerX.size(); i++){
+            //label.setText(getThreadIdByIndex(i));
             g2D.drawImage(customer, customerX.get(i),260,null);
+            g2D.setPaint(Color.RED);
+            g2D.setFont(new Font("Ink Free", Font.BOLD,17));
+            g2D.drawString(CustomerFactory.customers.get(i).getThreadId(),customerX.get(i) + 60, 300);
+
+
         }
-        //g2D.drawImage(customer, 40,260,this);
+
         g2D.drawImage(bar, 495,385 - bar.getHeight(null), null);
         g2D.drawImage(home, 20, 390 - home.getHeight(null) , null);
-        //g2D.drawImage(customer, 40,260,null);
     }
 
      void implementGUIInterface() {
@@ -73,7 +81,8 @@ public class Display extends JPanel implements ActionListener {
             @Override
             public void newCustomerAnimation() {
                 actionsList.add(null);
-                animationMutexList.add(new Semaphore(1));
+                customerAnimationMutexList.add(new Semaphore(1));
+                labelAnimationMutexList.add(new Semaphore(1));
                 customerX.add(30);
                 customerY.add(260);
                 doAction(Action.NEW_CUSTOMER, actionsList.size()-1);
@@ -83,7 +92,8 @@ public class Display extends JPanel implements ActionListener {
             public void goToTheBar(String id) {
                 var index = getThreadByIndex(id);
                 try{
-                    animationMutexList.get(index).acquire();
+                    customerAnimationMutexList.get(index).acquire();
+                    labelAnimationMutexList.get(index).acquire();
                 } catch (InterruptedException e){
                     throw new RuntimeException(e);
                 }
@@ -94,13 +104,26 @@ public class Display extends JPanel implements ActionListener {
             public void goHome(String id) {
                 var index = getThreadByIndex(id);
                 try{
-                    animationMutexList.get(index).acquire();
+                    customerAnimationMutexList.get(index).acquire();
+                    labelAnimationMutexList.get(index).acquire();
                 } catch (InterruptedException e){
                     throw new RuntimeException(e);
                 }
                 doAction(Action.GOHOME, index);
             }
         };
+    }
+
+    private String getThreadIdByIndex(int ind) {
+        var customer = CustomerFactory.customers;
+
+        for(int index = 0; index < customer.size(); index++){
+
+            if(customer.get(index).equals(ind)){
+                return customer.get(ind).getThreadId();
+            }
+        }
+        return "";
     }
 
     private int getThreadByIndex(String id) {
@@ -171,7 +194,8 @@ public class Display extends JPanel implements ActionListener {
 
         if(currentY == y && currentX == x) {
             actionsList.set(index, null);
-            animationMutexList.get(index).release();
+            customerAnimationMutexList.get(index).release();
+            labelAnimationMutexList.get(index).release();
         }
         repaint();
     }
