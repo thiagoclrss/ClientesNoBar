@@ -43,7 +43,6 @@ public class Display extends JPanel implements ActionListener {
         this.setBackground(Color.BLACK);
         background = new ImageIcon("assets/cityBackground2.jpg").getImage();
         background = background.getScaledInstance(690,370, Image.SCALE_SMOOTH);
-
         home = new ImageIcon("assets/newHouse.png").getImage();
         home = home.getScaledInstance(180,180,Image.SCALE_SMOOTH);
 
@@ -155,7 +154,7 @@ public class Display extends JPanel implements ActionListener {
 
         for(int index = 0; index < customer.size(); index++){
             if(index == 1){
-                System.out.println(customer.get(1).getThreadId());
+                //System.out.println(customer.get(1).getThreadId());
             }
             if(customer.get(index).getThreadId().equals(id)){
                 return index;
@@ -199,7 +198,7 @@ public class Display extends JPanel implements ActionListener {
     }
 
     private void waitXY(int index) {
-        goToXY(400,260, index);
+        goToXY(390,260, index);
     }
 
     private void goToBarXY(int index) {
