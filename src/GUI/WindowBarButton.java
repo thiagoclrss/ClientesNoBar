@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 public class WindowBarButton extends JPanel implements ActionListener {
     JTextField chairsField;
+    JLabel label;
     Integer chairsQnt;
     AddButton button;
     public WindowBarButton(){
@@ -17,10 +18,14 @@ public class WindowBarButton extends JPanel implements ActionListener {
     }
     private void addButton(){
         //cadeiras no bar
-        chairsField = new CustomTextField("CADEIRAS: ");
+        label = new JLabel("CADEIRAS DO BAR");
+        label.setForeground(new Color(0xC60808));
+        label.setFont(new Font("courier", Font.BOLD, 15));
+        chairsField = new CustomTextField();
+        add(label);
         add(chairsField);
 
-        button = new AddButton("Ok");
+        button = new AddButton("OK");
         button.addActionListener(this);
         add(button);
     }

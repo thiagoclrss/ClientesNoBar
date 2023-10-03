@@ -25,7 +25,7 @@ public class Display extends JPanel implements ActionListener {
     ArrayList<Semaphore> labelAnimationMutexList;
     ArrayList<GUI.Action> actionsList;
     public GUIInterface guiInterface;
-    int velocity = 1;
+    int velocity = 2;
     JLabel label;
     Timer timer;
     public Display(){
@@ -111,19 +111,43 @@ public class Display extends JPanel implements ActionListener {
                 }
                 doAction(Action.GOHOME, index);
             }
-        };
-    }
 
-    private String getThreadIdByIndex(int ind) {
-        var customer = CustomerFactory.customers;
-
-        for(int index = 0; index < customer.size(); index++){
-
-            if(customer.get(index).equals(ind)){
-                return customer.get(ind).getThreadId();
+            @Override
+            public void dinner(String id) {
+                var index = getThreadByIndex(id);
+                try {
+                    customerAnimationMutexList.get(index).acquire();
+                    labelAnimationMutexList.get(index).acquire();
+                } catch (InterruptedException e){
+                    throw new RuntimeException(e);
+                }
+                doAction(Action.DINNER, index);
             }
-        }
-        return "";
+
+            @Override
+            public void rest(String id) {
+                var index = getThreadByIndex(id);
+                try {
+                    customerAnimationMutexList.get(index).acquire();
+                    labelAnimationMutexList.get(index).acquire();
+                } catch (InterruptedException e){
+                    throw new RuntimeException(e);
+                }
+                doAction(Action.REST, index);
+            }
+
+            @Override
+            public void wait(String id) {
+                var index = getThreadByIndex(id);
+                try {
+                    customerAnimationMutexList.get(index).acquire();
+                    labelAnimationMutexList.get(index).acquire();
+                } catch (InterruptedException e){
+                    throw new RuntimeException(e);
+                }
+                doAction(Action.WAIT, index);
+            }
+        };
     }
 
     private int getThreadByIndex(String id) {
@@ -154,16 +178,28 @@ public class Display extends JPanel implements ActionListener {
             if(action == Action.NEW_CUSTOMER){
                 repaint();
             }
-
             if(action == Action.GOHOME){
                 goHomeXY(i);
             }
-
+            if(action == Action.REST){
+                goHomeXY(i);
+            }
             if(action == Action.GOTOBAR){
                 goToBarXY(i);
             }
+            if(action == Action.DINNER){
+                goToBarXY(i);
+            }
+            if(action == Action.WAIT){
+                waitXY(i);
+            }
+
         }
 
+    }
+
+    private void waitXY(int index) {
+        goToXY(400,260, index);
     }
 
     private void goToBarXY(int index) {

@@ -16,6 +16,9 @@ public class WindowButton extends JPanel implements ActionListener {
     JTextField fieldTimeAtHome;
     Integer barTime;
     Integer homeTime;
+    JLabel nameLabel;
+    JLabel timeAtTheBarLabel;
+    JLabel timeAtHomeLabel;
     String id;
     GUIInterface guiInterface;
     AddButton button;
@@ -27,16 +30,28 @@ public class WindowButton extends JPanel implements ActionListener {
 
     private void addButton(){
         //id
-        fiedlID = new CustomTextField("NOME: ");
+        nameLabel = new JLabel("NOME ");
+        nameLabel.setForeground(new Color(0xC60808));
+        nameLabel.setFont(new Font("courier", Font.BOLD, 15));
+        fiedlID = new CustomTextField();
+        add(nameLabel);
         add(fiedlID);
         //tempo no bar
-        fieldTimeAtTheBar = new CustomTextField("TEMPO NO BAR:");
+        timeAtTheBarLabel = new JLabel("TEMPO NO BAR");
+        timeAtTheBarLabel.setForeground(new Color(0xC60808));
+        timeAtTheBarLabel.setFont(new Font("courier", Font.BOLD, 15));
+        fieldTimeAtTheBar = new CustomTextField();
+        add(timeAtTheBarLabel);
         add(fieldTimeAtTheBar);
         //tempo em casa
-        fieldTimeAtHome = new CustomTextField("TEMPO EM CASA:");
+        timeAtHomeLabel = new JLabel("TEMPO EM CASA");
+        timeAtHomeLabel.setForeground(new Color(0xC60808));
+        timeAtHomeLabel.setFont(new Font("courier", Font.BOLD, 15));
+        fieldTimeAtHome = new CustomTextField();
+        add(timeAtHomeLabel);
         add(fieldTimeAtHome);
         //
-        button = new AddButton("Adicionar novo cliente");
+        button = new AddButton("OK");
         button.addActionListener(this);
         add(button);
     }

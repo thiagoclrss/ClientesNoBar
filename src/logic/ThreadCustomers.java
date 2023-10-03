@@ -3,9 +3,12 @@ package logic;
 public class ThreadCustomers extends Thread {
 
     private String id;
+    private  int freeChairsVerification;
+    private  int availableChairsVerification;
     private Integer timeAtTheBar;
     private Integer timeAtHome;
     private Boolean bar = true;
+    private Boolean firstTime;
     private GUIInterface guiInterface;
 
     public ThreadCustomers(String id, Integer timeAtTheBar, Integer timeAtHome, GUIInterface guiInterface) {
@@ -18,21 +21,31 @@ public class ThreadCustomers extends Thread {
     @Override
     public void run() {
         guiInterface.newCustomerAnimation();
+        freeChairsVerification = 0;
+        availableChairsVerification = Bar.chairQnt;
+        firstTime = true;
         while (true){
             goToTheBar();
             cpuBound(bar, timeAtTheBar);
+            guiInterface.dinner(id);
             goHome();
             cpuBound(bar, timeAtHome);
+            guiInterface.rest(id);
         }
     }
 
     public void goToTheBar() {
         try {
-            Bar.emptyChairs.acquire();
-            guiInterface.goToTheBar(id);
-            Bar.mutex.acquire();
-            bar = true;
-            System.out.println(id + " entrou no bar!");
+            //if(freeChairsVerification == Bar.emptyChairs.availablePermits()) firstTime = false;
+            //while (Bar.emptyChairs.availablePermits()!=availableChairsVerification){guiInterface.rest(id);}
+            if(firstTime){
+                Bar.emptyChairs.acquire();
+                Bar.mutex.acquire();
+                guiInterface.goToTheBar(id);
+
+                bar = true;
+                System.out.println(id + " entrou no bar!");
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
@@ -43,8 +56,8 @@ public class ThreadCustomers extends Thread {
     public void goHome() {
         try {
             Bar.fullChairs.acquire();
-            guiInterface.goHome(id);
             Bar.mutex.acquire();
+            guiInterface.goHome(id);
             bar = false;
             System.out.println(id + " saiu do bar!");
         } catch (InterruptedException e) {
@@ -52,6 +65,7 @@ public class ThreadCustomers extends Thread {
         } finally {
             Bar.mutex.release();
             Bar.emptyChairs.release();
+            if(availableChairsVerification == Bar.emptyChairs.availablePermits()) firstTime = true;
         }
 
 
