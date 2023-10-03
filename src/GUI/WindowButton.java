@@ -9,9 +9,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class WindowButton extends JPanel implements ActionListener {
-    JTextField fiedlID;
-    JTextField fieldTimeAtTheBar;
-    JTextField fieldTimeAtHome;
+
+    CustomTextField fiedlID;
+    CustomTextField fieldTimeAtTheBar;
+    CustomTextField fieldTimeAtHome;
     Integer barTime;
     Integer homeTime;
     AddCustomerButton button;
