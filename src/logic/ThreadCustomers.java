@@ -2,28 +2,29 @@ package logic;
 
 public class ThreadCustomers extends Thread {
 
-    private String id;
-    private  int freeChairsVerification;
-    private  int availableChairsVerification;
-    private Integer timeAtTheBar;
-    private Integer timeAtHome;
+    private final String id;
+    private final Integer timeAtTheBar;
+    private final Integer timeAtHome;
     private Boolean bar = true;
-    private Boolean permission;
-    private GUIInterface guiInterface;
+    private String status;
+    private final int ocupiedVerification;
+    private final int availableVerification;
+    private final GUIInterface guiInterface;
+    private int count;
 
     public ThreadCustomers(String id, Integer timeAtTheBar, Integer timeAtHome, GUIInterface guiInterface) {
         this.id = id;
         this.timeAtTheBar = timeAtTheBar;
         this.timeAtHome = timeAtHome;
         this.guiInterface = guiInterface;
+        this.count = 0;
+        availableVerification = Bar.chairQnt;
+        ocupiedVerification = 0;
     }
 
     @Override
     public void run() {
         guiInterface.newCustomerAnimation();
-        freeChairsVerification = 0;
-        availableChairsVerification = Bar.chairQnt;
-        permission = true;
         while (true){
             goToTheBar();
             cpuBound(bar, timeAtTheBar);
@@ -35,67 +36,56 @@ public class ThreadCustomers extends Thread {
 
     public void goToTheBar() {
         try {
-            Bar.mutex.acquire();
-            //verifco se existem threads esperando e lanço a animação de espera
-            if(freeChairsVerification == Bar.emptyChairs.availablePermits()){
+            if(ocupiedVerification == Bar.chairs.availablePermits()){
                 guiInterface.wait(this.id);
-                System.out.println(this.id + " está esperando!");
-                permission = false;
-            }
-            //
-            /*
-            if(Bar.emptyChairs.hasQueuedThreads()){
-                System.out.println(id + " está esperando!");
-                guiInterface.wait();
-            }
-
-             */
-            Bar.mutex.release();
-
-
-            //se o numero de permissões é 0, o bar está lotado e devo correr por esse fluxo
-            if(!permission) {
-                Bar.door.acquire();
-                Bar.emptyChairs.acquire();
                 Bar.mutex.acquire();
+                status = "está esperando!";
+                Bar.mutex.release();
+                System.out.println(this.id + " está esperando!");
+                Bar.chairs.acquire();
+                Bar.mutex.acquire();
+                status = "esta indo ao bar";
+                bar = true;
+                count++;
+                Bar.mutex.release();
                 guiInterface.goToTheBar(this.id);
             } else {
-                //se for true o código segue o fluxo normal
-
-                Bar.emptyChairs.acquire();
-                Bar.mutex.acquire();
+                Bar.chairs.acquire();
                 guiInterface.goToTheBar(this.id);
+                Bar.mutex.acquire();
+                status = "esta indo ao bar";
+                count++;
+                bar = true;
+                Bar.mutex.release();
 
                 //System.out.println(id + " entrou no bar!");
-                bar = true;
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
-            Bar.mutex.release();
-            Bar.fullChairs.release();
+
         }
     }
     public void goHome() {
         try {
-            Bar.fullChairs.acquire();
             Bar.mutex.acquire();
-            guiInterface.goHome(this.id);
             bar = false;
-            System.out.println(this.id + " saiu do bar!");
+            count--;
+            Bar.mutex.release();
+            status = "Indo para casa";
+            guiInterface.goHome(this.id);
+            System.out.println(this.id + " esta indo para casa!");
+            Bar.mutex.acquire();
+            if(count == 0){
+                Bar.chairs.release(Bar.chairQnt);
+            }
+            Bar.mutex.release();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
 
-            if(availableChairsVerification == Bar.emptyChairs.availablePermits()) {
-                Bar.door.release();
-                permission = true;
-            };
-            Bar.mutex.release();
-            Bar.emptyChairs.release();
+
         }
-
-
     }
 
     public void cpuBound(Boolean bar, long time){
@@ -104,9 +94,11 @@ public class ThreadCustomers extends Thread {
 
         if (this.bar) {
             guiInterface.dinner(id);
+            status = "Está no bar";
             System.out.println("Cliente " + this.id + " está no bar. ");
         } else {
             guiInterface.rest(id);
+            status = "Está em casa";
             System.out.println("Cliente " + this.id + " está em casa. ");
         }
 
@@ -127,8 +119,10 @@ public class ThreadCustomers extends Thread {
             tempoDecorrido = milisegundos / 1000;
         }
     }
-
     public String getThreadId() {
         return id;
+    }
+    public String getStatus() {
+        return status;
     }
 }

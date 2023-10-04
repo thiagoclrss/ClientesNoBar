@@ -151,11 +151,7 @@ public class Display extends JPanel implements ActionListener {
 
     private int getThreadByIndex(String id) {
         var customer = CustomerFactory.customers;
-
         for(int index = 0; index < customer.size(); index++){
-            if(index == 1){
-                //System.out.println(customer.get(1).getThreadId());
-            }
             if(customer.get(index).getThreadId().equals(id)){
                 return index;
             }
