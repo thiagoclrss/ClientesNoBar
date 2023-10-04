@@ -9,6 +9,7 @@ public class CustomerCard extends JPanel {
     JLabel timeLabel;
 
     public CustomerCard(String id, String status){
+        setLayout(new BorderLayout());
         iDThreadLabel.setText(id);
         statusLabel.setText(status);
         //timeLabel.setText(time);
@@ -18,18 +19,19 @@ public class CustomerCard extends JPanel {
     }
 
     void setFields(){
+        //
         iDThreadLabel.setForeground(new Color(0xC60808));
         iDThreadLabel.setFont(new Font("courier", Font.BOLD, 20));
-        iDThreadLabel.setLocation(130, 30);
+        //iDThreadLabel.setLocation(130, 30);
         statusLabel.setForeground(new Color(0xC60808));
         statusLabel.setFont(new Font("courier", Font.BOLD, 25));
-        statusLabel.setLocation(130,130);
-        setLayout(null);
+        //statusLabel.setLocation(130,130);
+
         //timeLabel.setForeground(new Color(0xC60808));
         //timeLabel.setFont(new Font("courier", Font.BOLD, 15));
 
-        add(iDThreadLabel);
-        add(statusLabel);
+        add(iDThreadLabel, BorderLayout.NORTH);
+        add(statusLabel, BorderLayout.CENTER);
         //add(timeLabel);
     }
 
