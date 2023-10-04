@@ -194,7 +194,7 @@ public class Display extends JPanel implements ActionListener {
     }
 
     private void waitXY(int index) {
-        goToXY(390,260, index);
+        goToXY(430 - (index * 40) ,260, index);
     }
 
     private void goToBarXY(int index) {

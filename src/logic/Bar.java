@@ -5,6 +5,7 @@ import java.util.concurrent.Semaphore;
 public class Bar {
     public static Semaphore chairs, mutex;
     public static  int chairQnt;
+    public static int count = 0;
 
 
     public Bar(int chairQnt) {

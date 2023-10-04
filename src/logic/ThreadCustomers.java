@@ -10,14 +10,13 @@ public class ThreadCustomers extends Thread {
     private final int ocupiedVerification;
     private final int availableVerification;
     private final GUIInterface guiInterface;
-    private int count;
+
 
     public ThreadCustomers(String id, Integer timeAtTheBar, Integer timeAtHome, GUIInterface guiInterface) {
         this.id = id;
         this.timeAtTheBar = timeAtTheBar;
         this.timeAtHome = timeAtHome;
         this.guiInterface = guiInterface;
-        this.count = 0;
         availableVerification = Bar.chairQnt;
         ocupiedVerification = 0;
     }
@@ -36,29 +35,31 @@ public class ThreadCustomers extends Thread {
 
     public void goToTheBar() {
         try {
-            if(ocupiedVerification == Bar.chairs.availablePermits()){
+            if(Bar.count == Bar.chairQnt){
                 guiInterface.wait(this.id);
                 Bar.mutex.acquire();
-                status = "está esperando!";
+                status = "esta esperando!";
                 Bar.mutex.release();
-                System.out.println(this.id + " está esperando!");
+                System.out.println(this.id + " esta esperando!");
                 Bar.chairs.acquire();
+                System.out.println(id + " esta indo ao bar!");
                 Bar.mutex.acquire();
                 status = "esta indo ao bar";
                 bar = true;
-                count++;
+                Bar.count++;
                 Bar.mutex.release();
                 guiInterface.goToTheBar(this.id);
             } else {
                 Bar.chairs.acquire();
                 guiInterface.goToTheBar(this.id);
+                System.out.println(id + " esta indo ao bar!");
                 Bar.mutex.acquire();
                 status = "esta indo ao bar";
-                count++;
+                Bar.count++;
                 bar = true;
                 Bar.mutex.release();
 
-                //System.out.println(id + " entrou no bar!");
+                //
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -70,20 +71,19 @@ public class ThreadCustomers extends Thread {
         try {
             Bar.mutex.acquire();
             bar = false;
-            count--;
+            Bar.count--;
             Bar.mutex.release();
             status = "Indo para casa";
             guiInterface.goHome(this.id);
             System.out.println(this.id + " esta indo para casa!");
             Bar.mutex.acquire();
-            if(count == 0){
+            if(Bar.count == 0){
                 Bar.chairs.release(Bar.chairQnt);
             }
             Bar.mutex.release();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
-
 
         }
     }
@@ -95,11 +95,11 @@ public class ThreadCustomers extends Thread {
         if (this.bar) {
             guiInterface.dinner(id);
             status = "Está no bar";
-            System.out.println("Cliente " + this.id + " está no bar. ");
+            System.out.println(this.id + " esta no bar. ");
         } else {
             guiInterface.rest(id);
             status = "Está em casa";
-            System.out.println("Cliente " + this.id + " está em casa. ");
+            System.out.println(this.id + " esta em casa. ");
         }
 
         long tempoAtual = System.currentTimeMillis();

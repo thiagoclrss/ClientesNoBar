@@ -5,6 +5,7 @@ import logic.GUIInterface;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.PrintStream;
 
 public class MyFrame extends JFrame {
     final int FRAME_WIDTH = 1280;
@@ -44,6 +45,8 @@ public class MyFrame extends JFrame {
 
         Log log = new Log();
         log.setBounds(288, 415,690,230);
+        OutputStream outputStream = new OutputStream(log.getLogTextArea());
+        System.setOut(new PrintStream(outputStream));
         add(log);
     }
 

@@ -13,7 +13,7 @@ public class CustomerCard extends JPanel {
         statusLabel.setText(status);
         //timeLabel.setText(time);
         setBackground(new Color(0x787676));
-        //setPreferredSize(new Dimension(250,100));
+        setPreferredSize(new Dimension(250,100));
         setFields();
     }
 
@@ -24,6 +24,7 @@ public class CustomerCard extends JPanel {
         statusLabel.setForeground(new Color(0xC60808));
         statusLabel.setFont(new Font("courier", Font.BOLD, 25));
         statusLabel.setLocation(130,130);
+        setLayout(null);
         //timeLabel.setForeground(new Color(0xC60808));
         //timeLabel.setFont(new Font("courier", Font.BOLD, 15));
 

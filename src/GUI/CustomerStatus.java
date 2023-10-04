@@ -31,8 +31,9 @@ public class CustomerStatus extends JPanel {
         }
 
          */
+        //setLayout(null);
         customerCard = new CustomerCard("fulano", "comendo");
-        customerCard.setBounds(10,10,360,100);
+        //customerCard.setBounds(5,10,230,100);
         add(customerCard);
     }
 
