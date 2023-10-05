@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ClientesNoBar:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ClientesNoBar_jar</output-path>
+    <root id="archive" name="ClientesNoBar.jar">
+      <element id="module-output" name="ClientesNoBar" />
+    </root>
+  </artifact>
+</component>

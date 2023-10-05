@@ -4,14 +4,17 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CustomerCard extends JPanel {
-    JLabel iDThreadLabel = new JLabel("teste");
-    JLabel statusLabel = new JLabel("testeStatus");
+    //private JTextArea textAreaTime;
+
+    public static JLabel iDThreadLabel = new JLabel("");
+    public static JLabel statusLabel = new JLabel("");
+
     JLabel timeLabel;
 
-    public CustomerCard(String id, String status){
+    public CustomerCard(){
         setLayout(new BorderLayout());
-        iDThreadLabel.setText(id);
-        statusLabel.setText(status);
+        //iDThreadLabel.setText(id);
+        //statusLabel.setText(status);
         //timeLabel.setText(time);
         setBackground(new Color(0x787676));
         setPreferredSize(new Dimension(250,100));
@@ -30,9 +33,11 @@ public class CustomerCard extends JPanel {
         //timeLabel.setForeground(new Color(0xC60808));
         //timeLabel.setFont(new Font("courier", Font.BOLD, 15));
 
-        add(iDThreadLabel, BorderLayout.NORTH);
+        //add(iDThreadLabel, BorderLayout.NORTH);
         add(statusLabel, BorderLayout.CENTER);
         //add(timeLabel);
     }
+
+    // public JTextArea getCardTextArea( return textAreaTime );
 
 }

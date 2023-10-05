@@ -1,5 +1,7 @@
 package logic;
 
+import GUI.CustomerCard;
+
 public class ThreadCustomers extends Thread {
 
     private final String id;
@@ -75,7 +77,7 @@ public class ThreadCustomers extends Thread {
             Bar.mutex.release();
             status = "Indo para casa";
             guiInterface.goHome(this.id);
-            System.out.println(this.id + " esta indo para casa!");
+            System.out.println("\n" + this.id + " esta indo para casa!");
             Bar.mutex.acquire();
             if(Bar.count == 0){
                 Bar.chairs.release(Bar.chairQnt);
@@ -91,15 +93,16 @@ public class ThreadCustomers extends Thread {
     public void cpuBound(Boolean bar, long time){
         long auxPlayingTime = timeAtTheBar;
         long auxQuietTime = timeAtHome;
+        String auxLabel = "";
 
         if (this.bar) {
             guiInterface.dinner(id);
             status = "Está no bar";
-            System.out.println(this.id + " esta no bar. ");
+            System.out.println("\n" + this.id + " esta no bar. \n");
         } else {
             guiInterface.rest(id);
             status = "Está em casa";
-            System.out.println(this.id + " esta em casa. ");
+            System.out.println("\n" + this.id + " esta em casa. \n");
         }
 
         long tempoAtual = System.currentTimeMillis();
@@ -107,7 +110,12 @@ public class ThreadCustomers extends Thread {
         while (tempoDecorrido < time) {
             milisegundos = (System.currentTimeMillis() - tempoAtual);
             if ((milisegundos / 1000) > tempoDecorrido) {
-                if (bar) auxPlayingTime--;
+                if (bar) {
+                    auxPlayingTime--;
+                    auxLabel = Long.toString(auxPlayingTime);
+                    CustomerCard.statusLabel.setText(this.id + ": " + auxLabel);
+                    // System.out.print(auxPlayingTime + 1);
+                }
                 else auxQuietTime--;
             }
             if (bar && auxPlayingTime == 0) {

@@ -4,6 +4,8 @@ import logic.CustomerFactory;
 import logic.GUIInterface;
 import logic.StatusInterface;
 
+import GUI.CustomerCard;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -26,19 +28,18 @@ public class CustomerStatus extends JPanel {
 
     private void setCard() {
 
+        /*
         for(int i = 0; i < CustomerFactory.customers.size(); i++){
             customerCard = new CustomerCard(CustomerFactory.customers.get(i).getThreadId(),CustomerFactory.customers.get(i).getStatus());
             add(customerCard);
         }
 
+        */
 
-
-
-        /*
-        customerCard = new CustomerCard("fulano", "comendo");
+        customerCard = new CustomerCard();
         //customerCard.setBounds(5,10,230,100);
         add(customerCard);
-         */
+
 
     }
 
